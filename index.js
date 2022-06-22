@@ -21,6 +21,10 @@ connect();
 const router = require("./src/routes/index");
 app.use(router);
 
+//Swagger API ui Module
+const { swaggerUi, specs } = require("./src/modules/swagger");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 // Error handler middleware
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
