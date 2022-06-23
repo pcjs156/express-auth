@@ -1,3 +1,7 @@
+/*
+    MongoDB 연결 및 설정 Loader
+*/
+
 const { NODE_ENV } = process.env;
 
 const { mongo: mongoConfig } = require("../configs");
