@@ -1,18 +1,17 @@
-require("dotenv").config();
 const { NODE_ENV } = process.env;
 
-const dbConfig = require("../configs/mongo");
+const { mongo: mongoConfig } = require("../configs");
 
 const mongoose = require("mongoose");
 
 module.exports = async () => {
-    if (NODE_ENV !== "production") {
+    if (NODE_ENV !== "prod") {
         mongoose.set("debug", true);
         console.log("MongoLoader: debug mode on");
     }
 
     mongoose
-        .connect(dbConfig.MONGO_URI, {
+        .connect(mongoConfig.MONGO_URI, {
             dbName: "toms",
             useNewUrlParser: true,
             useUnifiedTopology: true,

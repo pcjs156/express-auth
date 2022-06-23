@@ -1,7 +1,4 @@
-// .env file로 환경 변수 관리하는데 사용
-require("dotenv").config();
-
-const loader = require("./src/loaders");
+const loader = require("./loaders");
 
 const express = require("express");
 
