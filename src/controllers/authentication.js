@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const jwt = require("../util/jwt");
 
 exports.loginView = function (req, res, next) {
     const username = req.body.username;
@@ -22,7 +23,8 @@ exports.loginView = function (req, res, next) {
                 }
 
                 if (isMatch) {
-                    res.status(200).send();
+                    const accessToken = jwt.sign({ id: user._id });
+                    res.status(200).json({ token: accessToken });
                 } else {
                     res.status(401).send();
                 }
@@ -61,4 +63,8 @@ exports.signUpView = function (req, res, next) {
             res.status(201).send();
         }
     });
+};
+
+exports.authCheckView = function (req, res, next) {
+    res.status(200).json({ id: req.id });
 };
