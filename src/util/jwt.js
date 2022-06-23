@@ -1,5 +1,13 @@
 const jwt = require("jsonwebtoken");
-const SECRET = process.env.JWT_SECRET;
+const { auth: authConfig } = require("../configs");
+
+// 길이 length 만큼의 랜덤한 문자열을 출력
+function __createNewSecret(length = 30) {
+    require("crypto").randomBytes(length, function (err, buffer) {
+        var token = buffer.toString("hex");
+        console.log(token);
+    });
+}
 
 module.exports = {
     sign: (user) => {
@@ -7,9 +15,9 @@ module.exports = {
             id: user.id,
         };
 
-        return jwt.sign(payload, SECRET, {
-            algorithm: "HS256",
-            expiresIn: "1h",
+        return jwt.sign(payload, authConfig.jwt.secretKey, {
+            algorithm: authConfig.jwt.algorithm,
+            expiresIn: authConfig.jwt.expiresIn,
         });
     },
 
@@ -17,7 +25,7 @@ module.exports = {
         let decoded = null;
 
         try {
-            decoded = jwt.verify(token, SECRET);
+            decoded = jwt.verify(token, authConfig.jwt.secretKey);
             return {
                 ok: true,
                 id: decoded.id,

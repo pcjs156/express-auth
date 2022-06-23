@@ -10,4 +10,5 @@ if (envFound.error) {
 
 module.exports = {
     mongo: require("./mongo"),
+    auth: require("./authentication"),
 };

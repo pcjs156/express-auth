@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs");
-
-// 해시 알고리즘 적용 횟수
-const SALT_FACTOR = 10;
+const { auth: authConfig } = require("../configs");
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
@@ -29,7 +27,7 @@ userSchema.pre("save", function (done) {
         return done();
     }
 
-    bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
+    bcrypt.genSalt(authConfig.saltFactor, (err, salt) => {
         if (err) {
             return done(err);
         }
